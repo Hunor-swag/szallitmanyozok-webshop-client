@@ -1,0 +1,9 @@
+{
+	"header": {
+		"address": "Address",
+		"email": "Email",
+		"phone": "Phone",
+		"events": "Events",
+		"members": "Members"
+	}
+}

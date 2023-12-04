@@ -1,0 +1,9 @@
+{
+	"header": {
+		"address": "Cím",
+		"email": "Email",
+		"phone": "Telefon",
+		"events": "Események",
+		"members": "Tagok"
+	}
+}
