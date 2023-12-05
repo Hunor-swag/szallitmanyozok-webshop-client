@@ -5,10 +5,19 @@ export type Product = {
     description: Array;
     currency: string;
     price: number;
-    imageSrc: string;
+    image: {
+      data: Array;
+    };
     createdAt: string;
     updatedAt: string;
     publishedAt: string;
     type: string;
   };
+};
+
+export type Cart = {
+  products: Array<{
+    product: Product;
+    quantity: number;
+  }>;
 };
