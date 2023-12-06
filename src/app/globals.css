@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+	.shopping-cart-table-header {
+		@apply font-semibold py-5
+	}
+	.shopping-cart-table-cell {
+		@apply text-left py-4
+	}
+}

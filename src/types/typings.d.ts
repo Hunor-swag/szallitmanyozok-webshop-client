@@ -15,9 +15,7 @@ export type Product = {
   };
 };
 
-export type Cart = {
-  products: Array<{
-    product: Product;
-    quantity: number;
-  }>;
+export type CartItem = {
+  product: Product;
+  quantity: number;
 };

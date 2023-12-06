@@ -14,13 +14,13 @@ export default async function Home({ params }: { params: { lang: string } }) {
         </h1>
       </div>
       <div className='bg-white bg-opacity-90 p-10 rounded-lg w-full'>
-        <div className='w-full h-16 px-8 flex-wrap space-x-2'>
+        <div className='w-full h-16 px-8 flex-wrap'>
           <Button>Termékek</Button>
           <Button>Szolgáltatások</Button>
           <Button>Digitális termékek</Button>
           <Button>Összes</Button>
         </div>
-        <div className='w-full px-8 flex space-x-6'>
+        <div className='w-full px-8 flex flex-wrap'>
           {products.map((product, index) => (
             <ProductCard product={product} key={index} />
           ))}

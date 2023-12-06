@@ -1,73 +1,52 @@
-import { Cart, Product } from '@/types/typings';
-import { useEffect, useState } from 'react';
+import { displayToast } from '@/lib/toasts';
+import { CartItem, Product } from '@/types/typings';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@/redux/store';
+import {
+  handleAddToCart,
+  handleRemoveFromCart,
+  setCartItems,
+} from '@/redux/features/cart-slice';
 
 export function useShoppingCart() {
-  const [cart, setCart] = useState<Cart | null>(null);
-  const [cartCount, setCartCount] = useState<number>(0);
+  const dispatch = useDispatch();
+  const cart = useAppSelector((state) => state.cartReducer);
+  const cartCount = useAppSelector((state) => state.cartReducer.quantity);
 
   useEffect(() => {
     const storedCart = window.localStorage.getItem('shoppingCart');
     if (storedCart) {
-      setCart(JSON.parse(storedCart));
+      const cartJson = JSON.parse(storedCart) as {
+        cartItems: Array<CartItem>;
+        quantity: number;
+      };
+      dispatch(setCartItems(cartJson.cartItems));
     }
   }, []);
 
-  useEffect(() => {
-    if (cart !== null) {
-      window.localStorage.setItem('shoppingCart', JSON.stringify(cart));
-    }
-    setCartCount(countTotalProducts());
-  }, [cart]);
-
   const addToCart = (product: Product) => {
-    if (cart === null) {
-      setCart({
-        products: [{ product, quantity: 1 }],
-      });
-    } else {
-      const productIndex = cart.products.findIndex(
-        (item) => item.product.id === product.id
-      );
-      if (productIndex !== -1) {
-        const updatedCart = { ...cart };
-        updatedCart.products[productIndex].quantity += 1;
-        setCart(updatedCart);
-      } else {
-        setCart({
-          ...cart,
-          products: [...cart.products, { product, quantity: 1 }],
-        });
-      }
-    }
+    dispatch(handleAddToCart(product));
+    displayToast('success', `${product.attributes.name} added to cart`);
   };
 
   const removeFromCart = (product: Product) => {
-    if (cart !== null) {
-      const productIndex = cart.products.findIndex(
-        (item) => item.product.id === product.id
-      );
-      if (productIndex !== -1) {
-        const updatedCart = { ...cart };
-        updatedCart.products[productIndex].quantity -= 1;
-        if (updatedCart.products[productIndex].quantity === 0) {
-          updatedCart.products.splice(productIndex, 1);
-        }
-        setCart(updatedCart);
-      }
-    }
+    dispatch(handleRemoveFromCart(product));
   };
 
-  const countTotalProducts = () => {
-    let totalCount = 0;
+  const getTotalPrice = () => {
+    const items = cart.cartItems;
+    let totalPrice = 0;
 
-    if (cart && cart.products && cart.products.length > 0) {
-      cart.products.forEach((product) => {
-        totalCount += product.quantity;
+    if (items && items.length > 0) {
+      items.forEach((item: CartItem) => {
+        totalPrice += item.product.attributes.price * item.quantity;
       });
     }
 
-    return totalCount;
+    return totalPrice;
   };
 
-  return { cart, cartCount, addToCart, removeFromCart };
+  return { cart, cartCount, addToCart, removeFromCart, getTotalPrice };
 }
