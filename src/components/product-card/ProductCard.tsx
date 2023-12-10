@@ -1,9 +1,5 @@
 import { Product } from '@/types/typings';
-import Image, { StaticImageData } from 'next/image';
-import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import Button from '../Button';
-import { useShoppingCart } from '@/hooks/useShoppingCart';
 import AddToCartButton from './AddToCartButton';
 
 type Props = {

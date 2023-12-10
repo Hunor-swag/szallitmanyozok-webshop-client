@@ -28,7 +28,6 @@ export function useShoppingCart() {
 
   const addToCart = (product: Product) => {
     dispatch(handleAddToCart(product));
-    displayToast('success', `${product.attributes.name} added to cart`);
   };
 
   const removeFromCart = (product: Product) => {

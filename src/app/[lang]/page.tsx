@@ -1,4 +1,4 @@
-import Button from '@/components/Button';
+import LinkButton from '@/components/LinkButton';
 import ProductCard from '@/components/product-card/ProductCard';
 import { Product } from '@/types/typings';
 import { getProducts } from '@/lib/products';
@@ -15,10 +15,10 @@ export default async function Home({ params }: { params: { lang: string } }) {
       </div>
       <div className='bg-white bg-opacity-90 p-10 rounded-lg w-full'>
         <div className='w-full h-16 px-8 flex-wrap'>
-          <Button>Termékek</Button>
-          <Button>Szolgáltatások</Button>
-          <Button>Digitális termékek</Button>
-          <Button>Összes</Button>
+          <LinkButton>Termékek</LinkButton>
+          <LinkButton>Szolgáltatások</LinkButton>
+          <LinkButton>Digitális termékek</LinkButton>
+          <LinkButton>Összes</LinkButton>
         </div>
         <div className='w-full px-8 flex flex-wrap'>
           {products.map((product, index) => (

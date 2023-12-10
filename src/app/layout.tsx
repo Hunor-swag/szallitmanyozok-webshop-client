@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Header from '@/components/header/Header';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { store } from '@/redux/store';
 import { ReduxProvider } from '@/redux/provider';
+import { NextAuthProvider } from '@/components/NextAuthProvider';
 
 export const metadata: Metadata = {
   title: 'Strapi Next.js Webshop',
@@ -16,10 +15,14 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const session = null;
+
   return (
     <html lang='en'>
       <body>
-        <ReduxProvider>{children}</ReduxProvider>
+        <NextAuthProvider session={session}>
+          <ReduxProvider>{children}</ReduxProvider>
+        </NextAuthProvider>
         <ToastContainer />
       </body>
     </html>
