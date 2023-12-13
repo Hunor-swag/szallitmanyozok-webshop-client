@@ -47,5 +47,17 @@ export function useShoppingCart() {
     return totalPrice;
   };
 
-  return { cart, cartCount, addToCart, removeFromCart, getTotalPrice };
+  const resetCart = () => {
+    dispatch(setCartItems([]));
+    window.localStorage.removeItem('shoppingCart');
+  };
+
+  return {
+    cart,
+    cartCount,
+    addToCart,
+    removeFromCart,
+    getTotalPrice,
+    resetCart,
+  };
 }

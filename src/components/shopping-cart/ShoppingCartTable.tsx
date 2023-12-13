@@ -7,7 +7,8 @@ import Button from '../LinkButton';
 import LoadingSpinner from '../ui/loading-spinner';
 
 export default function ShoppingCartTable() {
-  const { cart, addToCart, removeFromCart, getTotalPrice } = useShoppingCart();
+  const { cart, addToCart, removeFromCart, getTotalPrice, resetCart } =
+    useShoppingCart();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (cart.cartItems !== null) {
@@ -29,6 +30,9 @@ export default function ShoppingCartTable() {
       )}
       {!loading && cart.quantity > 0 && (
         <div>
+          <div className='flex justify-end'>
+            <Button onClick={resetCart}>Empty cart</Button>
+          </div>
           <table className='w-full table'>
             <thead>
               <tr className='border-gray-300 border-b'>

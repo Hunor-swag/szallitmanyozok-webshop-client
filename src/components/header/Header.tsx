@@ -8,7 +8,11 @@ import logo from '@/../public/mszsz_logo_feher.png';
 import logo2 from '@/../public/mszsz_logo_en_feher2.png';
 import LanguageSelector from './LanguageSelector';
 import { getDictionary } from '@/lib/getDictionary';
-import { Bars3Icon, ShoppingCartIcon } from '@heroicons/react/24/outline';
+import {
+  Bars3Icon,
+  ShoppingCartIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
 import { getCookie } from '@/lib/cookies';
 import { useDispatch } from 'react-redux';
@@ -129,7 +133,10 @@ export default function Header({ lang }: { lang: string }) {
             >
               <XMarkIcon className='w-6 h-6' />
             </button>
-            <div className='hidden items-center pl-5 md:flex'>
+            <div className='hidden items-center pl-5 md:flex space-x-4'>
+              <Link href='/profile' className='flex items-center'>
+                <UserIcon className='w-6 h-6' />
+              </Link>
               <Link href='/cart' className='flex items-center'>
                 <ShoppingCartIcon className='w-6 h-6' />
                 {/* Display the number of items in the shopping cart */}

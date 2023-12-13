@@ -8,16 +8,20 @@ import CheckoutCartTable from './checkout-cart-table';
 import Button from '../Button';
 import { useSession } from 'next-auth/react';
 import { User } from '@/types/typings';
+import { loadStripe } from '@stripe/stripe-js';
+import { useShoppingCart } from '@/hooks/useShoppingCart';
 
 export default function CheckoutForm() {
   const {
     handleSubmit,
     register,
     formState: { errors },
+    reset,
   } = useForm();
 
   const session = useSession();
-  const [user, setUser] = useState<User | null>(null);
+
+  const { cart } = useShoppingCart();
 
   useEffect(() => {
     if (session && session.data && session.data.user) {
@@ -32,14 +36,51 @@ export default function CheckoutForm() {
       })
         .then((res) => res.json())
         .then((data) => {
-          setUser(data);
+          reset({
+            firstname: data.firstname,
+            lastname: data.lastname,
+            email: data.email,
+            phone: data.phone,
+          });
         });
     }
   }, [session]);
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  async function onSubmit(formdata: any) {}
+  async function onSubmit(formdata: any) {
+    const stripe = await loadStripe(
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+    );
+    if (!stripe) {
+      console.log('No stripe instance');
+      return;
+    }
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/create-checkout-session`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstname: formdata.firstname,
+          lastname: formdata.lastname,
+          email: formdata.email,
+          phone: formdata.phone,
+          cart: cart,
+        }),
+      }
+    );
+    const session = await res.json();
+    const { error } = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (error) {
+      console.error('Error:', error);
+    }
+  }
 
   return (
     <div>
@@ -72,7 +113,7 @@ export default function CheckoutForm() {
               name='firstname'
               register={register}
               type='text'
-              defaultValue={user ? user.firstname : undefined}
+              // defaultValue={user ? user.firstname : undefined}
               error={errors.firstname?.message?.toString()}
               required={true}
               placeholder='Firstname'
@@ -82,7 +123,7 @@ export default function CheckoutForm() {
               name='lastname'
               register={register}
               type='text'
-              defaultValue={user ? user.lastname : undefined}
+              // defaultValue={user ? user.lastname : undefined}
               error={errors.lastname?.message?.toString()}
               required={true}
               placeholder='Lastname'
@@ -94,7 +135,7 @@ export default function CheckoutForm() {
               name='email'
               register={register}
               type='email'
-              defaultValue={user ? user.email : undefined}
+              // defaultValue={user ? user.email : undefined}
               error={errors.email?.message?.toString()}
               required={true}
               placeholder='email@example.com'
@@ -104,7 +145,7 @@ export default function CheckoutForm() {
               name='phone'
               register={register}
               type='text'
-              defaultValue={user ? user.phone : undefined}
+              // defaultValue={user ? user.phone : undefined}
               error={errors.phone?.message?.toString()}
               required={true}
               placeholder='Phone Number'

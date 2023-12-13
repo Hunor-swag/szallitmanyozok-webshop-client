@@ -38,3 +38,8 @@ export type User = {
   billing_country: string;
   billing_postalCode: string;
 };
+
+export type Cart = {
+  cartItems: Array<CartItem> | null;
+  quantity: number;
+};

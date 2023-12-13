@@ -2,6 +2,7 @@ import LinkButton from '@/components/LinkButton';
 import ProductCard from '@/components/product-card/ProductCard';
 import { Product } from '@/types/typings';
 import { getProducts } from '@/lib/products';
+import { getStripeProducts } from '@/lib/stripe/stripe-functions';
 
 export default async function Home({ params }: { params: { lang: string } }) {
   const products = (await getProducts()) as Array<Product>;
