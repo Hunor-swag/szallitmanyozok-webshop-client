@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     const link = `${process.env.URL}/auth/reset-password?token=${uuid}`;
 
     const data = {
-      from: 'Authentication System <noreply@authentication-system.com>',
+      from: 'Szállítmányozók Webshop <noreply@webshop.szallitmanyozok.com>',
       to: email,
       subject: 'Password recovery',
       html: emailContent(link),

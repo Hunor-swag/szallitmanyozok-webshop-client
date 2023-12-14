@@ -15,7 +15,7 @@ export default function CheckoutCartTable() {
   }, [cart.cartItems]);
 
   return (
-    <div className='w-full rounded-md overflow-hidden p-6 bg-gray-200 mt-4'>
+    <div className='w-full overflow-hidden p-6 border border-gray-300 mt-4'>
       {loading && (
         <div className='flex justify-center items-center'>
           <svg className='animate-spin h-5 w-5 mr-3' viewBox='0 0 24 24'>
@@ -45,15 +45,18 @@ export default function CheckoutCartTable() {
             </tr>
           </thead>
           <tbody>
-            {cart.cartItems?.map((item) => (
-              <tr key={item.product.id} className='border-b border-gray-300'>
-                <td className='td'>{item.product.attributes.name}</td>
-                <td className='td'>{item.quantity}</td>
-                <td className='td text-right'>
-                  {item.product.attributes.price}
-                </td>
-              </tr>
-            ))}
+            {cart.cartItems?.map((item) => {
+              if (item.quantity === 0) return;
+              return (
+                <tr key={item.product.id} className='border-b border-gray-300'>
+                  <td className='td'>{item.product.attributes.name}</td>
+                  <td className='td'>{item.quantity}</td>
+                  <td className='td text-right'>
+                    {item.product.attributes.price}
+                  </td>
+                </tr>
+              );
+            })}
             <tr>
               <td colSpan={3} className='td text-right font-semibold pt-4'>
                 Overall: {getTotalPrice()}

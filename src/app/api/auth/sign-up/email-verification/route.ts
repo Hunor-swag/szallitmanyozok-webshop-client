@@ -56,6 +56,8 @@ export async function POST(req: NextRequest) {
 
     const uuid = uuidv4();
 
+    console.log(uuid);
+
     const queryString = `INSERT INTO webshop_email_verifications (id, user_payload) VALUES (?, ?)`;
 
     const res = await query('szallitmanyozok-webshop', queryString, [

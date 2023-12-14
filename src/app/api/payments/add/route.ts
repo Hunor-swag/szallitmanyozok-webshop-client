@@ -15,8 +15,9 @@ export async function POST(req: NextRequest) {
     )) as Array<any>;
 
     if (checkResult.length > 0) {
+      // payment already exists
       return new NextResponse(
-        JSON.stringify({ message: 'Payment already exists' }),
+        JSON.stringify({ message: 'Invalid payment session' }),
         {
           status: 200,
           headers: { 'Content-Type': 'application/json' },

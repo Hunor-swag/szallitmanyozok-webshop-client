@@ -1,7 +1,8 @@
+import Button from '@/components/Button';
+import AddToCartButton from '@/components/product/AddToCartButton';
 import { generatePriceString } from '@/lib/price';
 import { getProduct } from '@/lib/products';
 import { Product } from '@/types/typings';
-import Image from 'next/image';
 
 export default async function ProductPage({
   params,
@@ -15,7 +16,7 @@ export default async function ProductPage({
   if (!product) return <div>404 not found</div>;
 
   return (
-    <div className='bg-white bg-opacity-90 p-10 rounded-lg'>
+    <div className='p-10 border-gray-300 border'>
       <div className='flex space-x-6'>
         <div className='w-60 rounded-lg overflow-hidden'>
           <img
@@ -36,6 +37,9 @@ export default async function ProductPage({
             {product.attributes.description[0].children[0].text}
           </p>
         </div>
+      </div>
+      <div className='flex justify-end w-full'>
+        <AddToCartButton product={product} />
       </div>
     </div>
   );

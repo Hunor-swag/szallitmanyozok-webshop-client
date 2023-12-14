@@ -1,10 +1,12 @@
 'use client';
+
 type Props = {
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset' | undefined;
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
+  href?: string;
 };
 
 export default function Button({

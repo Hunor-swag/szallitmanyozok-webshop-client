@@ -21,6 +21,8 @@ export default function CheckoutForm() {
 
   const session = useSession();
 
+  console.log(session);
+
   const { cart } = useShoppingCart();
 
   useEffect(() => {
@@ -84,7 +86,7 @@ export default function CheckoutForm() {
 
   return (
     <div>
-      {!session && (
+      {!session.data && (
         <div className='flex flex-col justify-start w-full mb-6'>
           <p>
             Already have an account?{' '}

@@ -55,13 +55,13 @@ export default function Header({ lang }: { lang: string }) {
 
   return (
     <header
-      className={`z-50 fixed top-0 w-full bg-[#14144e] md:bg-gray-800 md:bg-opacity-50 transition-all duration-300 px-[5%] md:px-0 ${
+      className={`z-50 fixed top-0 w-full bg-[#14144e] md:bg-gray-800 transition-all duration-300 px-[5%] md:px-0 ${
         isScrolled ? 'md:-translate-y-16' : 'md:translate-y-0'
       }
       `}
     >
       <div
-        className={`h-16 w-full p-4 md:px-[5%] lg:px-[20%] text-gray-300 hidden md:block`}
+        className={`h-16 w-full p-4 md:px-[5%] lg:px-[15%] text-gray-300 hidden md:block`}
       >
         <div
           className={`relative transition-all duration-300 ${
@@ -92,7 +92,7 @@ export default function Header({ lang }: { lang: string }) {
         </div>
       </div>
       <div className={`flex flex-col transition-transform duration-300 `}>
-        <div className='z-50 w-full flex justify-between space-x-6 p-4 items-center text-white md:px-[5%] lg:px-[20%] h-[72px]'>
+        <div className='z-50 w-full flex justify-between space-x-6 p-4 items-center text-white md:px-[5%] lg:px-[15%] h-[72px]'>
           <div className='w-44 overflow-hidden h-10'>
             <Link href='/'>
               {lang === 'hu' && (

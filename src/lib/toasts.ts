@@ -1,54 +1,54 @@
 import { toast } from 'react-toastify';
 
-export function displayToast(type: string, message: string) {
+export function displayToast(type: string, message: string, duration?: number) {
   switch (type) {
     case 'success':
       toast.success(message, {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
+        autoClose: duration || 1000,
         theme: 'dark',
         style: {
-          backgroundColor: 'gray',
+          backgroundColor: 'black',
         },
       });
       break;
     case 'error':
       toast.error(message, {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
+        autoClose: duration || 1000,
         theme: 'dark',
         style: {
-          backgroundColor: 'gray',
+          backgroundColor: 'black',
         },
       });
       break;
     case 'warning':
       toast.warning(message, {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
+        autoClose: duration || 1000,
         theme: 'dark',
         style: {
-          backgroundColor: 'gray',
+          backgroundColor: 'black',
         },
       });
       break;
     case 'info':
       toast.info(message, {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
+        autoClose: duration || 1000,
         theme: 'dark',
         style: {
-          backgroundColor: 'gray',
+          backgroundColor: 'black',
         },
       });
       break;
     default:
       toast(message, {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 2000,
+        autoClose: duration || 1000,
         theme: 'dark',
         style: {
-          backgroundColor: 'gray',
+          backgroundColor: 'black',
         },
       });
       break;
@@ -65,8 +65,9 @@ export async function displayToastAfterFetch(
       position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000,
       theme: 'dark',
+
       style: {
-        backgroundColor: 'gray',
+        backgroundColor: 'black',
       },
     });
     if (callback) callback();
@@ -76,7 +77,7 @@ export async function displayToastAfterFetch(
       autoClose: 2000,
       theme: 'dark',
       style: {
-        backgroundColor: 'gray',
+        backgroundColor: 'black',
       },
     });
   }

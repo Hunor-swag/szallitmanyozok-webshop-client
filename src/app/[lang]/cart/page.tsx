@@ -1,8 +1,10 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import ShoppingCartTable from '@/components/shopping-cart/ShoppingCartTable';
+import { getServerSession } from 'next-auth';
 
-export default function ShoppingCart() {
+export default async function ShoppingCart() {
   return (
-    <div className='bg-white bg-opacity-90 p-10 rounded-lg'>
+    <div>
       <ShoppingCartTable />
     </div>
   );

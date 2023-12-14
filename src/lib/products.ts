@@ -1,5 +1,5 @@
 export const getProducts = async () => {
-  const res = await fetch('http://127.0.0.1:1337/api/products', {
+  const res = await fetch('http://127.0.0.1:1337/api/products?populate=*', {
     cache: 'no-cache',
   });
   const data = await res.json();

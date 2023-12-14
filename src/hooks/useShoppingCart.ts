@@ -3,11 +3,13 @@ import { CartItem, Product } from '@/types/typings';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '@/redux/store';
+import { store, useAppSelector } from '@/redux/store';
 import {
   handleAddToCart,
   handleRemoveFromCart,
   setCartItems,
+  handleSetProductQuantity,
+  handleRemoveProduct,
 } from '@/redux/features/cart-slice';
 
 export function useShoppingCart() {
@@ -23,6 +25,15 @@ export function useShoppingCart() {
         quantity: number;
       };
       dispatch(setCartItems(cartJson.cartItems));
+    } else {
+      window.localStorage.setItem(
+        'shoppingCart',
+        JSON.stringify({
+          cartItems: [] as Array<CartItem>,
+          quantity: 0,
+        })
+      );
+      dispatch(setCartItems([]));
     }
   }, []);
 
@@ -32,6 +43,14 @@ export function useShoppingCart() {
 
   const removeFromCart = (product: Product) => {
     dispatch(handleRemoveFromCart(product));
+  };
+
+  const removeProduct = (product: Product) => {
+    dispatch(handleRemoveProduct(product));
+    // cart.cartItems?.forEach((item: CartItem) => {
+    //   for (let i = 0; i < item.quantity; i++)
+    //     dispatch(handleRemoveFromCart(product));
+    // });
   };
 
   const getTotalPrice = () => {
@@ -52,6 +71,10 @@ export function useShoppingCart() {
     window.localStorage.removeItem('shoppingCart');
   };
 
+  const setProductQuantity = (product: Product, quantity: number) => {
+    dispatch(handleSetProductQuantity({ product, quantity }));
+  };
+
   return {
     cart,
     cartCount,
@@ -59,5 +82,7 @@ export function useShoppingCart() {
     removeFromCart,
     getTotalPrice,
     resetCart,
+    setProductQuantity,
+    removeProduct,
   };
 }

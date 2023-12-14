@@ -43,6 +43,32 @@ export const cartSlice = createSlice({
         );
       }
     },
+    handleSetProductQuantity: (
+      state,
+      action: PayloadAction<{ product: Product; quantity: number }>
+    ) => {
+      const { product, quantity } = action.payload;
+
+      const updatedProducts = state.cartItems?.map((item: CartItem) => {
+        if (item.product.id === product.id) {
+          item.quantity = quantity;
+        }
+        return item;
+      });
+
+      state.cartItems = updatedProducts!;
+      state.quantity = countTotalProducts(state.cartItems);
+      localStorage.setItem('shoppingCart', JSON.stringify(state));
+    },
+    handleRemoveProduct: (state, action: PayloadAction<Product>) => {
+      const productToRemove = action.payload;
+      const updatedProducts = state.cartItems?.filter(
+        (item: CartItem) => item.product.id !== productToRemove.id
+      );
+      state.cartItems = updatedProducts!;
+      state.quantity = countTotalProducts(state.cartItems);
+      localStorage.setItem('shoppingCart', JSON.stringify(state));
+    },
     handleAddToCart: (state, action: PayloadAction<Product>) => {
       const productToAdd = action.payload;
 
@@ -95,6 +121,11 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { setCartItems, handleAddToCart, handleRemoveFromCart } =
-  cartSlice.actions;
+export const {
+  setCartItems,
+  handleAddToCart,
+  handleRemoveFromCart,
+  handleSetProductQuantity,
+  handleRemoveProduct,
+} = cartSlice.actions;
 export default cartSlice.reducer;

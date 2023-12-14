@@ -13,6 +13,7 @@ import {
 import { useForm } from 'react-hook-form';
 import TextInput from '../ui/text-input';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
 type Props = {
   open: boolean;
@@ -28,6 +29,11 @@ export function CheckoutDialog({ open, setOpen }: Props) {
 
   const onSubmit = async (formdata: any) => {
     setOpen(false);
+    await signIn('credentials', {
+      email: formdata.email,
+      password: formdata.password,
+      redirect: false,
+    });
   };
 
   return (

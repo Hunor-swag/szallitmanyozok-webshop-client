@@ -2,13 +2,21 @@
 
 import { useShoppingCart } from '@/hooks/useShoppingCart';
 import { MinusIcon, PlusIcon, XMarkIcon } from '@heroicons/react/24/solid';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Button from '../LinkButton';
 import LoadingSpinner from '../ui/loading-spinner';
+import { Product } from '@/types/typings';
 
 export default function ShoppingCartTable() {
-  const { cart, addToCart, removeFromCart, getTotalPrice, resetCart } =
-    useShoppingCart();
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    getTotalPrice,
+    resetCart,
+    setProductQuantity,
+    removeProduct,
+  } = useShoppingCart();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (cart.cartItems !== null) {
@@ -16,15 +24,34 @@ export default function ShoppingCartTable() {
     }
   }, [cart.cartItems]);
 
+  const handleQuantityChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    product: Product,
+    currentQuantity: number
+  ) => {
+    const inputValue = e.target.value.trim();
+
+    // check if the input is a number or empty
+    if (/^\d*$/.test(inputValue) || inputValue === '') {
+      let newQuantity = parseInt(inputValue);
+      if (isNaN(newQuantity)) {
+        newQuantity = currentQuantity;
+      }
+      setProductQuantity(product, newQuantity);
+    } else {
+      console.log('Invalid input, please enter a number');
+    }
+  };
+
   return (
-    <div className='rounded-lg overflow-hidden'>
+    <div className='overflow-hidden border border-gray-300 p-4'>
       {loading && (
         <div className='flex justify-center items-center'>
           <LoadingSpinner />
         </div>
       )}
       {!loading && cart.quantity === 0 && (
-        <h1 className='text-center pt-5 text-red-500 font-semibold'>
+        <h1 className='text-center py-5 text-red-500 font-semibold'>
           No items in the shopping cart
         </h1>
       )}
@@ -39,6 +66,7 @@ export default function ShoppingCartTable() {
                 <th className='shopping-cart-table-header text-left'>Name</th>
                 <th className='shopping-cart-table-header'>Quantity</th>
                 <th className='shopping-cart-table-header'>Price</th>
+                <th className='shopping-cart-table-header'></th>
               </tr>
             </thead>
             <tbody>
@@ -60,7 +88,26 @@ export default function ShoppingCartTable() {
                             <MinusIcon className='text-white w-3 h-3' />
                           </button>
                           <div className='w-9 h-full flex justify-center items-center'>
-                            <span className=''>{item.quantity}</span>
+                            {/* <input
+                              className='w-9 outline-none text-center h-full'
+                              value={
+                                item.quantity !== null &&
+                                item.quantity !== undefined
+                                  ? item.quantity
+                                  : ''
+                              }
+                              onChange={(e) =>
+                                handleQuantityChange(
+                                  e,
+                                  item.product,
+                                  item.quantity !== null &&
+                                    item.quantity !== undefined
+                                    ? item.quantity
+                                    : 0
+                                )
+                              }
+                            /> */}
+                            <span>{item.quantity}</span>
                           </div>
                           <button
                             onClick={() => {
@@ -77,6 +124,14 @@ export default function ShoppingCartTable() {
                           {/* Currency display function */}
                           {item.product.attributes.price}
                         </div>
+                      </td>
+                      <td className='shopping-cart-table-cell'>
+                        <button
+                          className='flex justify-center items-center w-4 h-4 mx-auto text-red-700'
+                          onClick={() => removeProduct(item.product)}
+                        >
+                          <XMarkIcon className='' />
+                        </button>
                       </td>
                     </tr>
                   );

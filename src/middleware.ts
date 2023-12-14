@@ -12,7 +12,9 @@ export function middleware(req: NextRequest) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-  if (pathnameHasLocale) return;
+  if (pathnameHasLocale) {
+    return;
+  }
 
   const lang = getLang(req);
 

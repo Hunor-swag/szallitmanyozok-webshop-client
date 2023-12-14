@@ -97,9 +97,11 @@ export default function EditProfileForm({ user }: Props) {
           minLength={8}
         />
       </div>
-      <Button type='submit' className='w-full'>
-        Save
-      </Button>
+      <div className='w-full flex justify-end'>
+        <Button type='submit' className='w-1/3'>
+          Save
+        </Button>
+      </div>
     </form>
   );
 }
