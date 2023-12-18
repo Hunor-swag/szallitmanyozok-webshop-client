@@ -4,7 +4,7 @@ import { useShoppingCart } from '@/hooks/useShoppingCart';
 import { useEffect, useState } from 'react';
 
 export default function CheckoutCartTable() {
-  const { cart, getTotalPrice } = useShoppingCart();
+  const { cart, total } = useShoppingCart();
 
   const [loading, setLoading] = useState(true);
 
@@ -59,7 +59,7 @@ export default function CheckoutCartTable() {
             })}
             <tr>
               <td colSpan={3} className='td text-right font-semibold pt-4'>
-                Overall: {getTotalPrice()}
+                Overall: {total}
               </td>
             </tr>
           </tbody>

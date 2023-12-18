@@ -16,6 +16,7 @@ export function useShoppingCart() {
   const dispatch = useDispatch();
   const cart = useAppSelector((state) => state.cartReducer);
   const cartCount = useAppSelector((state) => state.cartReducer.quantity);
+  const total = useAppSelector((state) => state.cartReducer.total);
 
   useEffect(() => {
     const storedCart = window.localStorage.getItem('shoppingCart');
@@ -23,6 +24,7 @@ export function useShoppingCart() {
       const cartJson = JSON.parse(storedCart) as {
         cartItems: Array<CartItem>;
         quantity: number;
+        total: number;
       };
       dispatch(setCartItems(cartJson.cartItems));
     } else {
@@ -31,6 +33,7 @@ export function useShoppingCart() {
         JSON.stringify({
           cartItems: [] as Array<CartItem>,
           quantity: 0,
+          total: 0,
         })
       );
       dispatch(setCartItems([]));
@@ -53,19 +56,6 @@ export function useShoppingCart() {
     // });
   };
 
-  const getTotalPrice = () => {
-    const items = cart.cartItems;
-    let totalPrice = 0;
-
-    if (items && items.length > 0) {
-      items.forEach((item: CartItem) => {
-        totalPrice += item.product.attributes.price * item.quantity;
-      });
-    }
-
-    return totalPrice;
-  };
-
   const resetCart = () => {
     dispatch(setCartItems([]));
     window.localStorage.removeItem('shoppingCart');
@@ -78,9 +68,9 @@ export function useShoppingCart() {
   return {
     cart,
     cartCount,
+    total,
     addToCart,
     removeFromCart,
-    getTotalPrice,
     resetCart,
     setProductQuantity,
     removeProduct,

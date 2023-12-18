@@ -12,41 +12,42 @@ export default async function SuccessfulPaymentPage({
 }) {
   const { id } = params;
 
-  const { payment_status } = await stripe.checkout.sessions.retrieve(id);
-
   const session = await getServerSession(authOptions);
 
   const { user_id } = session.user.id;
 
-  console.log(user_id);
-
-  const addPayment = async () => {
-    const res = await fetch(`${process.env.API_URL}/api/payments/add`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        checkout_session_id: id,
-        user_id: user_id || null,
-      }),
-    });
+  const updatePayment = async () => {
+    const res = await fetch(
+      `${process.env.API_URL}/api/payments/update/${id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: id,
+          paid: true,
+        }),
+      }
+    );
 
     const data = await res.json();
-    displayToastAfterFetch(res, data);
+    return res.status;
   };
 
-  await addPayment();
+  const status = await updatePayment();
 
   return (
     <div className='bg-white p-10 rounded-lg'>
-      {payment_status === 'paid' ? (
+      {status === 200 ? (
         <>
           <h1>Successful payment!</h1>
           <SuccessfulPaymentClient />
         </>
       ) : (
-        <h1>Payment failed.</h1>
+        <>
+          <h1>Payment failed</h1>
+        </>
       )}
     </div>
   );

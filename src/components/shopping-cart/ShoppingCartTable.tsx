@@ -12,10 +12,10 @@ export default function ShoppingCartTable() {
     cart,
     addToCart,
     removeFromCart,
-    getTotalPrice,
     resetCart,
     setProductQuantity,
     removeProduct,
+    total,
   } = useShoppingCart();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -141,7 +141,7 @@ export default function ShoppingCartTable() {
           <div className='flex justify-end mt-5 text-gray-700'>
             <div className='border-gray-300 border rounded-sm p-5 flex justify-between items-center w-40'>
               <span className='font-semibold text-sm'>Total</span>
-              <span className='text-lg'>{getTotalPrice()}</span>
+              <span className='text-lg'>{total}</span>
             </div>
           </div>
           <div className='flex justify-end py-4'>

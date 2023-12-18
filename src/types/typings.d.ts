@@ -42,4 +42,5 @@ export type User = {
 export type Cart = {
   cartItems: Array<CartItem> | null;
   quantity: number;
+  total: number;
 };

@@ -7,6 +7,7 @@ import { displayToast } from '@/lib/toasts';
 type InitialState = {
   cartItems: Array<CartItem> | null;
   quantity: number;
+  total: number;
 };
 
 const countTotalProducts = (items: Array<CartItem>) => {
@@ -21,9 +22,22 @@ const countTotalProducts = (items: Array<CartItem>) => {
   return totalCount;
 };
 
+const countTotal = (items: Array<CartItem>) => {
+  let total = 0;
+
+  if (items && items && items.length > 0) {
+    items.forEach((product) => {
+      total += product.quantity * product.product.attributes.price;
+    });
+  }
+
+  return total;
+};
+
 const initialState = {
   cartItems: null,
   quantity: 0,
+  total: 0,
 } as InitialState;
 
 export const cartSlice = createSlice({
@@ -33,6 +47,7 @@ export const cartSlice = createSlice({
     setCartItems: (state, action: PayloadAction<Array<CartItem>>) => {
       state.cartItems = action.payload;
       state.quantity = countTotalProducts(action.payload);
+      state.total = countTotal(action.payload);
       if (typeof window !== 'undefined') {
         window?.localStorage.setItem(
           'shoppingCart',
@@ -58,6 +73,7 @@ export const cartSlice = createSlice({
 
       state.cartItems = updatedProducts!;
       state.quantity = countTotalProducts(state.cartItems);
+      state.total = countTotal(state.cartItems);
       localStorage.setItem('shoppingCart', JSON.stringify(state));
     },
     handleRemoveProduct: (state, action: PayloadAction<Product>) => {
@@ -67,6 +83,7 @@ export const cartSlice = createSlice({
       );
       state.cartItems = updatedProducts!;
       state.quantity = countTotalProducts(state.cartItems);
+      state.total = countTotal(state.cartItems);
       localStorage.setItem('shoppingCart', JSON.stringify(state));
     },
     handleAddToCart: (state, action: PayloadAction<Product>) => {
@@ -90,6 +107,7 @@ export const cartSlice = createSlice({
       }
 
       state.quantity = countTotalProducts(state.cartItems); // Update total quantity
+      state.total = countTotal(state.cartItems); // update total price
       localStorage.setItem('shoppingCart', JSON.stringify(state)); // Update localStorage
     },
     handleRemoveFromCart: (state, action: PayloadAction<Product>) => {
@@ -105,6 +123,7 @@ export const cartSlice = createSlice({
         );
         state.cartItems = updatedProducts!;
         state.quantity = countTotalProducts(state.cartItems);
+        state.total = countTotal(state.cartItems);
         localStorage.setItem('shoppingCart', JSON.stringify(state));
       } else if (quantityOfProductToRemove! > 0) {
         const updatedProducts = state.cartItems?.map((item: CartItem) => {
@@ -115,6 +134,7 @@ export const cartSlice = createSlice({
         });
         state.cartItems = updatedProducts!;
         state.quantity = countTotalProducts(state.cartItems);
+        state.total = countTotal(state.cartItems);
         localStorage.setItem('shoppingCart', JSON.stringify(state));
       }
     },

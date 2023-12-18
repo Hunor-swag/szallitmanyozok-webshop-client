@@ -10,6 +10,8 @@ import { useSession } from 'next-auth/react';
 import { User } from '@/types/typings';
 import { loadStripe } from '@stripe/stripe-js';
 import { useShoppingCart } from '@/hooks/useShoppingCart';
+import RadioStyleButton from '../ui/radio-style-button';
+import { useRouter } from 'next/navigation';
 
 export default function CheckoutForm() {
   const {
@@ -19,11 +21,15 @@ export default function CheckoutForm() {
     reset,
   } = useForm();
 
+  const router = useRouter();
+
   const session = useSession();
 
-  console.log(session);
-
   const { cart } = useShoppingCart();
+
+  const [selectedService, setSelectedService] = useState<'stripe' | 'barion'>(
+    'stripe'
+  );
 
   useEffect(() => {
     if (session && session.data && session.data.user) {
@@ -51,6 +57,17 @@ export default function CheckoutForm() {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   async function onSubmit(formdata: any) {
+    switch (selectedService) {
+      case 'stripe':
+        await stripeCheckout(formdata);
+        break;
+      case 'barion':
+        await barionCheckout(formdata);
+        break;
+    }
+  }
+
+  async function stripeCheckout(formdata: any) {
     const stripe = await loadStripe(
       process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
     );
@@ -59,7 +76,7 @@ export default function CheckoutForm() {
       return;
     }
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/create-checkout-session`,
+      `${process.env.NEXT_PUBLIC_URL}/api/checkout/create-stripe-checkout`,
       {
         method: 'POST',
         headers: {
@@ -82,6 +99,28 @@ export default function CheckoutForm() {
     if (error) {
       console.error('Error:', error);
     }
+  }
+
+  async function barionCheckout(formdata: any) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/api/checkout/create-barion-checkout`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstname: formdata.firstname,
+          lastname: formdata.lastname,
+          email: formdata.email,
+          phone: formdata.phone,
+          cart: cart,
+        }),
+      }
+    );
+    const data = await res.json();
+    console.log(data);
+    router.push(data.GatewayUrl);
   }
 
   return (
@@ -158,6 +197,21 @@ export default function CheckoutForm() {
         <hr className='border-gray-400' />
 
         <CheckoutCartTable />
+        <div className='flex space-x-4'>
+          <RadioStyleButton
+            onClick={() => setSelectedService('stripe')}
+            selected={selectedService === 'stripe'}
+          >
+            Stripe
+          </RadioStyleButton>
+          <RadioStyleButton
+            onClick={() => setSelectedService('barion')}
+            selected={selectedService === 'barion'}
+          >
+            Barion
+          </RadioStyleButton>
+        </div>
+
         <div className='flex justify-end py-4'>
           <Button>Proceed To Checkout</Button>
         </div>
