@@ -119,6 +119,18 @@ export default function Header({ lang }: { lang: string }) {
                 <MenuItem key={index} href={item.href} text={item.text} />
               ))}
             </ul>
+            <div className='flex md:hidden space-x-3'>
+              <Link href='/profile' className='flex items-center'>
+                <UserIcon className='w-6 h-6' />
+              </Link>
+              <Link href='/cart' className='flex items-center'>
+                <ShoppingCartIcon className='w-6 h-6' />
+                {/* Display the number of items in the shopping cart */}
+                <span className='rounded-full bg-blue-500 w-4 h-4 text-[10px] flex justify-center items-center -ml-2 mt-6'>
+                  {cartCount}
+                </span>
+              </Link>
+            </div>
             {/* mobile hamburger icon if menu closed */}
             <button
               className={`block md:hidden ${isOpen && 'hidden'}`}

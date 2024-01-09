@@ -5,7 +5,7 @@ export async function getUserByEmail(email: string) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      email: email,
+      email: email || null,
     }),
   });
   const data = await res.json();

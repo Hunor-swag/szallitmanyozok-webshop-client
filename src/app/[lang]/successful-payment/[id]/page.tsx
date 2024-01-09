@@ -14,7 +14,7 @@ export default async function SuccessfulPaymentPage({
 
   const session = await getServerSession(authOptions);
 
-  const { user_id } = session.user.id;
+  const user_id = session?.user?.id;
 
   const updatePayment = async () => {
     const res = await fetch(
@@ -41,7 +41,7 @@ export default async function SuccessfulPaymentPage({
     <div className='bg-white p-10 rounded-lg'>
       {status === 200 ? (
         <>
-          <h1>Successful payment!</h1>
+          <h1 className='text-xl font-semibold'>Payment Successful!</h1>
           <SuccessfulPaymentClient />
         </>
       ) : (

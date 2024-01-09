@@ -39,7 +39,7 @@ export const authOptions = {
           // const isMatch = credentials?.password === user.password;
           // console.log(isMatch);
           if (!isMatch) {
-            console.log('user:', user);
+            // console.log('user:', user);
             // console.log("Invalid password");
             return null;
           } else {

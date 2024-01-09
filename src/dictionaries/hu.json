@@ -1,9 +1,137 @@
 {
+	"auth": {
+		"forgotPassword": {
+			"forgotYourPassword": "Elfelejtette jelszavát?",
+			"enterYourEmail": "Adja meg az email címét!",
+			"form": {
+				"inputText": "Email",
+				"inputPlaceholder": "Email cím...",
+				"sendButton": "Email küldése",
+				"sendingEmail": "Email küldése..."
+			},
+			"signIn": "Bejelentkezés"
+		},
+		"resetPassword": {
+			"loading": "Betöltés...",
+			"resetPassword": "Jelszó helyreállítása",
+			"enterNewPassword": "Adja meg új jelszavát!",
+			
+			"form": {
+				"passwordLabel": "Jelszó",
+				"passwordPlaceholder": "Adja meg jelszavát...",
+				"repeatPasswordLabel": "Jelszó ismétlése",
+				"repeatPasswordPlaceholder": "Ismételje meg jelszavát...",
+				"changingPassword": "Jelszó megváltoztatása...",
+				"changePasswordButton": "Jelszó megváltoztatása"
+			}
+		},
+		"signIn": {
+			"form": {
+				"emailLabel": "Email",
+				"emailPlaceholder": "Adja meg email címét...",
+				"passwordLabel": "Jelszó",
+				"passwordPlaceholder": "Adja meg jelszavát...",
+				"signInButton": "Bejelentkezés",
+				"forgotPassword": "Elfelejtett jelszó?",
+				"noAccount": "Még nincs fiókja?",
+				"signUp": "Regisztráció"
+			}
+		},
+		"signUp": {
+			"signUp":"Regisztráció",
+			"form": {
+				"firstnameLabel": "Keresztnév",
+				"firstnamePlaceholder": "Adja meg keresztnevét...",
+				"lastnameLabel": "Vezetéknév",
+				"lastnamePlaceholder": "Adja meg vezetéknevét...",
+				"emailLabel": "Email",
+				"emailPlaceholder": "Adja meg email címét...",
+				"passwordLabel": "Jelszó",
+				"passwordPlaceholder": "Adja meg jelszavát...",
+				"repeatPasswordLabel": "Jelszó ismétlése",
+				"repeatPasswordPlaceholder": "Ismételje meg jelszavát...",
+				"termsAndConditions": "Elfogadom a Felhasználási Feltételeket és az Adatvédelmi Szabályzatot.",
+				"signingUp": "Regisztráció...",
+				"signUpButton": "Regisztráció"
+			}
+		},
+		"emailVerification": {
+			"requestProcessing": "You're request is being processed..."
+		}
+	},
 	"header": {
 		"address": "Cím",
 		"email": "Email",
 		"phone": "Telefon",
 		"events": "Események",
 		"members": "Tagok"
+	},
+	"profile": {
+		"editProfile": "Profil szerkesztése",
+		"form": {
+			"firstname": "Keresztnév",
+			"lastname": "Vezetéknév",
+			"phone": "Telefon",
+			"password": "Jelszó",
+			"repeatPassword": "Jelszó ismétlése",
+			"saveChanges": "Mentés"
+		},
+		"billingDetails": "Számlázási adatok"
+	},
+	"cart": {
+		"noItems": "A kosár üres",
+		"emptyCartButton": "Kosár kiürítése",
+		"cartTable": {
+			"tableHeaders": {
+				"name": "Név",
+				"quantity": "Mennyiség",
+				"price": "Ár"
+			}
+		},
+		"total": "Összesen",
+		"checkoutButton": "Fizetés"
+	},
+	"checkout": {
+		"title": "Fizetés",
+		"alreadyHaveAccount": "Már van fiókja?",
+		"signIn": "Bejelentkezés",
+		"form": {
+			"firstname": "Keresztnév",
+			"lastname": "Vezetéknév",
+			"email": "Email",
+			"phone": "Telefon",
+			"billingDetails": {
+
+				"title": "Számlázási adatok",
+				"tax": "Adószám",
+				"state": "Megye",
+				"address": "Cím",
+				"city": "Város",
+				"postalCode": "Irányítószám",
+				"country": "Ország"	,
+				"saveData": "Adataim mentése"		
+			},
+			"participants": "résztvevők",
+			"name": "Név"
+		},
+		"table": {
+			"tableHeaders": {
+				"name": "Név",
+				"quantity": "Mennyiség",
+				"price": "Ár"
+			}
+		
+		},
+		"overall": "Összesen",
+		"discount": "Kedvezmény",
+		"checkout": "Tovább a fizetéshez"
+	},
+	"messages": {
+		"requiredField": "Ez a mező kötelező",
+		"maxLength_1": "A mező legfeljebb",
+		"maxLength_2": "karakter hosszú lehet",
+		"minLength_1": "A mezőnek legalább",
+		"minLength_2": "karakter hosszúnak kell lennie"
+
 	}
 }

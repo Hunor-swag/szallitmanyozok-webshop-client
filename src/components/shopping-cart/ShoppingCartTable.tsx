@@ -6,8 +6,9 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Button from '../LinkButton';
 import LoadingSpinner from '../ui/loading-spinner';
 import { Product } from '@/types/typings';
+import { getDictionary } from '@/lib/getDictionary';
 
-export default function ShoppingCartTable() {
+export default function ShoppingCartTable({ lang }: { lang: string }) {
   const {
     cart,
     addToCart,
@@ -23,6 +24,8 @@ export default function ShoppingCartTable() {
       setLoading(false);
     }
   }, [cart.cartItems]);
+
+  const dict = getDictionary(lang).cart;
 
   const handleQuantityChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -52,20 +55,26 @@ export default function ShoppingCartTable() {
       )}
       {!loading && cart.quantity === 0 && (
         <h1 className='text-center py-5 text-red-500 font-semibold'>
-          No items in the shopping cart
+          {dict.noItems}
         </h1>
       )}
       {!loading && cart.quantity > 0 && (
         <div>
           <div className='flex justify-end'>
-            <Button onClick={resetCart}>Empty cart</Button>
+            <Button onClick={resetCart}>{dict.emptyCartButton}</Button>
           </div>
           <table className='w-full table'>
             <thead>
               <tr className='border-gray-300 border-b'>
-                <th className='shopping-cart-table-header text-left'>Name</th>
-                <th className='shopping-cart-table-header'>Quantity</th>
-                <th className='shopping-cart-table-header'>Price</th>
+                <th className='shopping-cart-table-header text-left'>
+                  {dict.cartTable.tableHeaders.name}
+                </th>
+                <th className='shopping-cart-table-header'>
+                  {dict.cartTable.tableHeaders.quantity}
+                </th>
+                <th className='shopping-cart-table-header'>
+                  {dict.cartTable.tableHeaders.price}
+                </th>
                 <th className='shopping-cart-table-header'></th>
               </tr>
             </thead>
@@ -77,8 +86,8 @@ export default function ShoppingCartTable() {
                       <td className='shopping-cart-table-cell'>
                         {item.product.attributes.name}
                       </td>
-                      <td className='shopping-cart-table-cell flex justify-center'>
-                        <div className='flex items-center border border-gray-400'>
+                      <td className='shopping-cart-table-cell flex justify-center items-center'>
+                        <div className='flex items-center border border-gray-400 h-full'>
                           <button
                             onClick={() => {
                               removeFromCart(item.product);
@@ -140,12 +149,12 @@ export default function ShoppingCartTable() {
           </table>
           <div className='flex justify-end mt-5 text-gray-700'>
             <div className='border-gray-300 border rounded-sm p-5 flex justify-between items-center w-40'>
-              <span className='font-semibold text-sm'>Total</span>
+              <span className='font-semibold text-sm'>{dict.total}</span>
               <span className='text-lg'>{total}</span>
             </div>
           </div>
           <div className='flex justify-end py-4'>
-            <Button href='/checkout'>Checkout</Button>
+            <Button href='/checkout'>{dict.checkoutButton}</Button>
           </div>
         </div>
       )}

@@ -14,6 +14,7 @@ import { useForm } from 'react-hook-form';
 import TextInput from '../ui/text-input';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
+import { displayToast } from '@/lib/toasts';
 
 type Props = {
   open: boolean;
@@ -29,11 +30,16 @@ export function CheckoutDialog({ open, setOpen }: Props) {
 
   const onSubmit = async (formdata: any) => {
     setOpen(false);
-    await signIn('credentials', {
+    const res = await signIn('credentials', {
       email: formdata.email,
       password: formdata.password,
       redirect: false,
     });
+    if (res?.status === 200) {
+      displayToast('success', 'You have successfully signed in.');
+    } else {
+      displayToast('error', 'Invalid credentials.');
+    }
   };
 
   return (

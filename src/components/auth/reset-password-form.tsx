@@ -1,16 +1,20 @@
 'use client';
 
-import Link from 'next/link';
 import TextInput from '../ui/text-input';
-import { signIn } from 'next-auth/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { displayToastAfterFetch } from '@/lib/toasts';
 import { useState } from 'react';
 import Button from '../Button';
+import { getDictionary } from '@/lib/getDictionary';
 
-export default function ResetPasswordForm({ token }: { token: string }) {
+export default function ResetPasswordForm({
+  token,
+  lang,
+}: {
+  token: string;
+  lang: string;
+}) {
   const {
     register,
     handleSubmit,
@@ -47,6 +51,8 @@ export default function ResetPasswordForm({ token }: { token: string }) {
     setIsSubmitting(false);
   }
 
+  const dict = getDictionary(lang).auth.resetPassword.form;
+
   return (
     <form
       className='flex flex-col space-y-4 w-full text-sm'
@@ -55,27 +61,29 @@ export default function ResetPasswordForm({ token }: { token: string }) {
       })}
     >
       <TextInput
+        lang={lang}
         register={register}
         name='password'
-        label='Password'
-        placeholder='Enter your password...'
+        label={dict.passwordLabel}
+        placeholder={dict.passwordPlaceholder}
         type='password'
         required={true}
         minLength={8}
         error={errors?.password?.message?.toString()}
       />
       <TextInput
+        lang={lang}
         register={register}
         name='repeat_password'
-        label='Repeat Password'
-        placeholder='Enter your password again...'
+        label={dict.repeatPasswordLabel}
+        placeholder={dict.repeatPasswordPlaceholder}
         type='password'
         required={true}
         minLength={8}
         error={errors?.repeat_password?.message?.toString()}
       />
       <Button type='submit' disabled={isSubmitting}>
-        {isSubmitting ? 'Changing password...' : 'Change password'}
+        {isSubmitting ? dict.changingPassword : dict.changePasswordButton}
       </Button>
     </form>
   );

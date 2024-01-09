@@ -7,12 +7,14 @@ import TextInput from '../ui/text-input';
 import { displayToastAfterFetch } from '@/lib/toasts';
 import { useRouter } from 'next/navigation';
 import Button from '../Button';
+import { getDictionary } from '@/lib/getDictionary';
 
 type Props = {
   user: User;
+  lang: string;
 };
 
-export default function EditProfileForm({ user }: Props) {
+export default function EditProfileForm({ user, lang }: Props) {
   const {
     handleSubmit,
     register,
@@ -39,6 +41,8 @@ export default function EditProfileForm({ user }: Props) {
     displayToastAfterFetch(res, data, router.refresh());
   }
 
+  const dict = getDictionary(lang).profile.form;
+
   return (
     <form
       className='flex flex-col space-y-4'
@@ -48,58 +52,63 @@ export default function EditProfileForm({ user }: Props) {
     >
       <div className='flex flex-col md:flex-row md:space-x-4'>
         <TextInput
-          label='Country'
+          lang={lang}
+          label={dict.firstname}
           name='firstname'
           register={register}
           type='text'
           defaultValue={user.firstname}
           error={errors.firstname?.message?.toString()}
           required
-          placeholder='Firstname'
+          placeholder={dict.firstname}
         />
         <TextInput
-          label='Lastname'
+          lang={lang}
+          label={dict.lastname}
           name='lastname'
           register={register}
           type='text'
           defaultValue={user.lastname}
           error={errors.lastname?.message?.toString()}
           required
-          placeholder='Lastname'
+          placeholder={dict.lastname}
         />
       </div>
       <TextInput
-        label='Phone'
+        lang={lang}
+        label={dict.phone}
         name='phone'
         register={register}
         type='text'
         defaultValue={user.phone}
         error={errors.phone?.message?.toString()}
-        placeholder='Phone'
+        placeholder={dict.phone}
       />
       <div className='flex flex-col md:flex-row md:space-x-4'>
         <TextInput
-          label='Password'
+          lang={lang}
+          label={dict.password}
           name='password'
           register={register}
           type='password'
           error={errors.password?.message?.toString()}
-          placeholder='Password'
+          placeholder={dict.password}
           minLength={8}
         />
         <TextInput
-          label='Repeat Password'
+          lang={lang}
+          label={dict.repeatPassword}
           name='repeat_password'
           register={register}
           type='password'
           error={errors.repeat_password?.message?.toString()}
-          placeholder='Repeat Password'
+          placeholder={dict.repeatPassword}
           minLength={8}
         />
       </div>
       <div className='w-full flex justify-end'>
         <Button type='submit' className='w-1/3'>
-          Save
+          {dict.saveChanges}
         </Button>
       </div>
     </form>

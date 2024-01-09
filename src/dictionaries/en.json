@@ -1,9 +1,137 @@
 {
+	"auth": {
+		"forgotPassword": {
+			"forgotYourPassword": "Forgot your password?",
+			"enterYourEmail": "Enter your email and instructions will be sent to you!",
+			"form": {
+				"inputText": "Email",
+				"inputPlaceholder": "Enter your email...",
+				"sendButton": "Send Email",
+				"sendingEmail": "Sending email..."
+			},
+			"signIn": "Sign In"
+		},
+		"resetPassword": {
+			"loading": "Loading...",
+			"resetPassword": "Reset Password",
+			"enterNewPassword": "Enter your new password!",
+
+			"form": {
+				"passwordLabel": "Password",
+				"passwordPlaceholder": "Enter your password...",
+				"repeatPasswordLabel": "Repeat Password",
+				"repeatPasswordPlaceholder": "Enter your password again...",
+				"changingPassword": "Changing password...",
+				"changePasswordButton": "Change Password"
+			}
+		},
+		"signIn": {
+			"form": {
+				"emailLabel": "Email",
+				"emailPlaceholder": "Enter your email...",
+				"passwordLabel": "Password",
+				"passwordPlaceholder": "Enter your password...",
+				"signInButton": "Sign In",
+				"forgotPassword": "Forgot password?",
+				"noAccount": "Don't have an account?",
+				"signUp": "Sign Up"
+			}
+		},
+		"signUp": {
+			"signUp":"Sign Up",
+			"form": {
+				"firstnameLabel": "Firstname",
+				"firstnamePlaceholder": "Enter your firstname...",
+				"lastnameLabel": "Lastname",
+				"lastnamePlaceholder": "Enter your lastname...",
+				"emailLabel": "Email",
+				"emailPlaceholder": "Enter your email...",
+				"passwordLabel": "Password",
+				"passwordPlaceholder": "Enter your password...",
+				"repeatPasswordLabel": "Repeat Password",
+				"repeatPasswordPlaceholder": "Enter your password again...",
+				"termsAndConditions": "You accept our Terms And Conditions and Privacy Policy",
+				"signingUp": "Signing up...",
+				"signUpButton": "Sign Up"
+			}
+		},
+		"emailVerification": {
+			"requestProcessing": "You're request is being processed..."
+		}
+	},
 	"header": {
 		"address": "Address",
 		"email": "Email",
 		"phone": "Phone",
 		"events": "Events",
 		"members": "Members"
+	},
+	"cart": {
+		"noItems": "No items in the shopping cart",
+		"emptyCartButton": "Empty cart",
+		"cartTable": {
+			"tableHeaders": {
+				"name": "Name",
+				"quantity": "Quantity",
+				"price": "Price"
+			}
+		},
+		"total": "Total",
+		"checkoutButton": "Checkout"
+	},
+	"profile": {
+		"editProfile": "Edit Profile",
+		"form": {
+			"firstname": "Firstname",
+			"lastname": "Lastname",
+			"phone": "Phone",
+			"password": "Password",
+			"repeatPassword": "Repeat Password",
+			"saveChanges": "Save Changes"
+		},
+		"billingDetails": "Billing Details"
+	},
+	"checkout": {
+		"title": "Checkout",
+		"alreadyHaveAccount": "Already have an account?",
+		"signIn": "Sign in",
+		"form": {
+			"firstname": "Firstname",
+			"lastname": "Lastname",
+			"email": "Email",
+			"phone": "Phone",
+			"billingDetails": {
+
+				"title": "Billing details",
+				"tax": "Tax Number",
+				"state": "State",
+				"address": "Address",
+				"city": "City",
+				"postalCode": "Postal Code",
+				"country": "Country",
+				"saveData": "Save my data"			
+			},
+			"participants": "participants",
+			"name": "Name"
+		},
+		"table": {
+			"tableHeaders": {
+				"name": "Name",
+				"quantity": "Quantity",
+				"price": "Price"
+			}
+		
+		},
+		"overall": "Overall",
+		"discount": "Discount",
+		"checkout": "Proceed to checkout"
+	},
+	"messages": {
+		"requiredField": "This field is required",
+		"maxLength_1": "Must be no more than",
+		"maxLength_2": "characters",
+		"minLength_1": "Must be at least",
+		"minLength_2": "characters"
+
 	}
 }

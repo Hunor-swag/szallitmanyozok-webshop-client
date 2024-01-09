@@ -8,17 +8,21 @@ import { toast } from 'react-toastify';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAppSelector } from '@/redux/store';
 import Button from '../Button';
+import { getDictionary } from '@/lib/getDictionary';
 
 type Props = {
   callbackUrl: string;
+  lang: string;
 };
 
-export default function SigninForm({ callbackUrl }: Props) {
+export default function SigninForm({ callbackUrl, lang }: Props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const dict = getDictionary(lang).auth.signIn.form;
 
   const router = useRouter();
 
@@ -60,28 +64,30 @@ export default function SigninForm({ callbackUrl }: Props) {
       })}
     >
       <TextInput
+        lang={lang}
         register={register}
         name='email'
-        label='Email'
-        placeholder='Enter your email...'
+        label={dict.emailLabel}
+        placeholder={dict.emailPlaceholder}
         type='email'
         required={true}
         error={errors?.email?.message?.toString()}
       />
       <TextInput
+        lang={lang}
         register={register}
         name='password'
-        label='Password'
-        placeholder='Enter your password...'
+        label={dict.passwordLabel}
+        placeholder={dict.passwordPlaceholder}
         type='password'
         required={true}
         minLength={8}
         error={errors?.password?.message?.toString()}
       />
       <Link href='/forgot-password' className='self-end'>
-        Forgot Password?
+        {dict.forgotPassword}
       </Link>
-      <Button>Sign In</Button>
+      <Button>{dict.signInButton}</Button>
     </form>
   );
 }

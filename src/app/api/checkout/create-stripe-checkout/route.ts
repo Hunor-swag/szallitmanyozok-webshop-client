@@ -8,15 +8,6 @@ import { CartItem } from '@/types/typings';
 export async function POST(req: NextRequest) {
   try {
     const userSession = await getServerSession(authOptions);
-    if (!userSession) {
-      return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), {
-        status: 401,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-    }
-
     const { firstname, lastname, email, phone, cart } = await req.json();
 
     const session = await stripe.checkout.sessions.create({
@@ -45,7 +36,7 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         id: session.id,
-        user_id: userSession.user.id || null,
+        user_id: userSession ? userSession.user.id : null,
         timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
         cart: cart,
         service: 'stripe',

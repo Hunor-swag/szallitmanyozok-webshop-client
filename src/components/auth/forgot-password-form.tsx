@@ -8,8 +8,9 @@ import { useRouter } from 'next/navigation';
 import { displayToastAfterFetch } from '@/lib/toasts';
 import { useState } from 'react';
 import Button from '../Button';
+import { getDictionary } from '@/lib/getDictionary';
 
-export default function ForgotPasswordForm() {
+export default function ForgotPasswordForm({ lang }: { lang: string }) {
   const {
     register,
     handleSubmit,
@@ -44,6 +45,8 @@ export default function ForgotPasswordForm() {
     setIsSubmitting(false);
   }
 
+  const dict = getDictionary(lang).auth.forgotPassword.form;
+
   return (
     <form
       className='flex flex-col space-y-4 w-full text-sm'
@@ -52,17 +55,18 @@ export default function ForgotPasswordForm() {
       })}
     >
       <TextInput
+        lang={lang}
         register={register}
         name='email'
-        label='Email'
-        placeholder='Enter your email...'
+        label={dict.inputText}
+        placeholder={dict.inputPlaceholder}
         type='email'
         required={true}
         minLength={8}
         error={errors?.email?.message?.toString()}
       />
       <Button type='submit' disabled={isSubmitting}>
-        {isSubmitting ? 'Sending email...' : 'Send Email'}
+        {isSubmitting ? dict.sendingEmail : dict.sendButton}
       </Button>
     </form>
   );

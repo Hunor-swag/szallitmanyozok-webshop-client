@@ -1,0 +1,1 @@
+CREATE TABLE `szallitmanyozok-webshop`.`webshop_email_verifications` ( `id` VARCHAR(255) NOT NULL , `user_payload` JSON NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

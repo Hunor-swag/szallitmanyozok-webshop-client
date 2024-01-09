@@ -1,17 +1,22 @@
 'use client';
 
 import LoadingSpinner from '@/components/ui/loading-spinner';
+import { getDictionary } from '@/lib/getDictionary';
 import { displayToastAfterFetch } from '@/lib/toasts';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export default function EmailVerificationComponent({
   token,
+  lang,
 }: {
   token: string;
+  lang: string;
 }) {
   const router = useRouter();
   const [accountCreated, setAccountCreated] = useState(false);
+
+  const dict = getDictionary(lang);
 
   const signUp = () => {
     const res = fetch(`/api/auth/sign-up/${token}`, {
@@ -40,7 +45,9 @@ export default function EmailVerificationComponent({
   return (
     <div>
       <LoadingSpinner />
-      <h1 className='text-lg'>You're request is being processed...</h1>
+      <h1 className='text-lg'>
+        {dict.auth.emailVerification.requestProcessing}
+      </h1>
     </div>
   );
 }

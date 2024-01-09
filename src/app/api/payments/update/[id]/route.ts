@@ -1,5 +1,7 @@
 import { query } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
+import { emailContent } from './html';
+const mailgun = require('mailgun-js');
 
 export async function PUT(req: NextRequest) {
   try {
@@ -30,6 +32,40 @@ export async function PUT(req: NextRequest) {
     const queryString = `UPDATE webshop_payments SET paid = ? WHERE id = ?`;
 
     const res = await query('szallitmanyozok-webshop', queryString, [paid, id]);
+
+    // get email
+
+    const emailQueryString = `SELECT email FROM webshop_payments WHERE id = ?`;
+    const emailResult = (await query(
+      'szallitmanyozok-webshop',
+      emailQueryString,
+      [id]
+    )) as Array<any>;
+
+    const email = emailResult[0].email;
+
+    // send email
+
+    const api_key = process.env.MAILGUN_API_KEY;
+    const domain = process.env.MAILGUN_DOMAIN;
+    const host = process.env.MAILGUN_HOST;
+    // console.log(api_key, domain);
+    const mg = mailgun({ apiKey: api_key, domain: domain, host: host });
+
+    const data = {
+      from: 'Szállítmányozók Webshop <noreply@webshop.szallitmanyozok.com>',
+      to: email,
+      subject: 'Order confirmation',
+      html: emailContent(),
+    };
+
+    mg.messages().send(data, function (error: any, body: any) {
+      if (!error) {
+        console.log(body);
+      } else {
+        console.log(error);
+      }
+    });
 
     return new NextResponse(JSON.stringify({ message: 'Payment updated' }), {
       status: 200,

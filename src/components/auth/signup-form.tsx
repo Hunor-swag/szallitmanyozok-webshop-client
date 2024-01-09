@@ -6,8 +6,9 @@ import { displayToastAfterFetch } from '@/lib/toasts';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Button from '../Button';
+import { getDictionary } from '@/lib/getDictionary';
 
-export default function SignupForm() {
+export default function SignupForm({ lang }: { lang: string }) {
   const {
     register,
     handleSubmit,
@@ -45,6 +46,8 @@ export default function SignupForm() {
     setIsSubmitting(false);
   }
 
+  const dict = getDictionary(lang).auth.signUp.form;
+
   return (
     <form
       className='flex flex-col space-y-4 w-full text-sm'
@@ -53,8 +56,9 @@ export default function SignupForm() {
       })}
     >
       <TextInput
-        label='Firstname'
-        placeholder='Enter your firstname...'
+        lang={lang}
+        label={dict.firstnameLabel}
+        placeholder={dict.firstnamePlaceholder}
         type='text'
         register={register}
         name='firstname'
@@ -62,8 +66,9 @@ export default function SignupForm() {
         error={errors.firstname?.message?.toString()}
       />
       <TextInput
-        label='Lastname'
-        placeholder='Enter your lastname...'
+        lang={lang}
+        label={dict.lastnameLabel}
+        placeholder={dict.lastnamePlaceholder}
         type='text'
         register={register}
         name='lastname'
@@ -72,8 +77,9 @@ export default function SignupForm() {
       />
 
       <TextInput
-        label='Email'
-        placeholder='Enter your email...'
+        lang={lang}
+        label={dict.emailLabel}
+        placeholder={dict.emailPlaceholder}
         type='email'
         register={register}
         name='email'
@@ -81,8 +87,9 @@ export default function SignupForm() {
         error={errors.email?.message?.toString()}
       />
       <TextInput
-        label='Password'
-        placeholder='Enter your password...'
+        lang={lang}
+        label={dict.passwordLabel}
+        placeholder={dict.passwordPlaceholder}
         type='password'
         register={register}
         name='password'
@@ -91,8 +98,9 @@ export default function SignupForm() {
         error={errors.password?.message?.toString()}
       />
       <TextInput
-        label='Repeat Password'
-        placeholder='Enter your password again...'
+        lang={lang}
+        label={dict.repeatPasswordLabel}
+        placeholder={dict.repeatPasswordPlaceholder}
         type='password'
         register={register}
         name='repeat_password'
@@ -107,11 +115,11 @@ export default function SignupForm() {
           })}
         />
         <label className={`${errors.terms && 'text-red-500'}`}>
-          You accept our Terms And Conditions and Privacy Policy
+          {dict.termsAndConditions}
         </label>
       </div>
       <Button type='submit' disabled={isSubmitting}>
-        {isSubmitting ? 'Signing up...' : 'Sign up'}
+        {isSubmitting ? dict.signingUp : dict.signUpButton}
       </Button>
     </form>
   );

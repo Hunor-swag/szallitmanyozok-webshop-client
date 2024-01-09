@@ -7,6 +7,7 @@ import { displayToast } from '@/lib/toasts';
 type InitialState = {
   cartItems: Array<CartItem> | null;
   quantity: number;
+  discount: number;
   total: number;
 };
 
@@ -34,9 +35,22 @@ const countTotal = (items: Array<CartItem>) => {
   return total;
 };
 
+const calculateTotalWithDiscount = (
+  items: Array<CartItem>,
+  discount: number
+) => {
+  let total = countTotal(items);
+
+  // Apply discount logic here based on your requirements
+  total -= total * (discount / 100); // Example: Applying a percentage discount
+
+  return total;
+};
+
 const initialState = {
   cartItems: null,
   quantity: 0,
+  discount: 0,
   total: 0,
 } as InitialState;
 
@@ -138,6 +152,14 @@ export const cartSlice = createSlice({
         localStorage.setItem('shoppingCart', JSON.stringify(state));
       }
     },
+    handleApplyDiscount: (state, action: PayloadAction<number>) => {
+      state.discount = action.payload;
+      state.total = calculateTotalWithDiscount(
+        state.cartItems!,
+        state.discount
+      );
+      localStorage.setItem('shoppingCart', JSON.stringify(state));
+    },
   },
 });
 
@@ -147,5 +169,6 @@ export const {
   handleRemoveFromCart,
   handleSetProductQuantity,
   handleRemoveProduct,
+  handleApplyDiscount,
 } = cartSlice.actions;
 export default cartSlice.reducer;

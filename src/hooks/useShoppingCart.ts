@@ -10,6 +10,7 @@ import {
   setCartItems,
   handleSetProductQuantity,
   handleRemoveProduct,
+  handleApplyDiscount,
 } from '@/redux/features/cart-slice';
 
 export function useShoppingCart() {
@@ -17,6 +18,7 @@ export function useShoppingCart() {
   const cart = useAppSelector((state) => state.cartReducer);
   const cartCount = useAppSelector((state) => state.cartReducer.quantity);
   const total = useAppSelector((state) => state.cartReducer.total);
+  const discount = useAppSelector((state) => state.cartReducer.discount);
 
   useEffect(() => {
     const storedCart = window.localStorage.getItem('shoppingCart');
@@ -65,14 +67,20 @@ export function useShoppingCart() {
     dispatch(handleSetProductQuantity({ product, quantity }));
   };
 
+  const applyDiscount = (discount: number) => {
+    dispatch(handleApplyDiscount(discount));
+  };
+
   return {
     cart,
     cartCount,
     total,
+    discount,
     addToCart,
     removeFromCart,
     resetCart,
     setProductQuantity,
     removeProduct,
+    applyDiscount,
   };
 }

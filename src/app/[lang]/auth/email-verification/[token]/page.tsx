@@ -17,11 +17,11 @@ const EmailVerificationComponent = dynamic(
 export default function EmailVerificationPage({
   params,
 }: {
-  params: { token: string };
+  params: { token: string; lang: string };
 }) {
   return (
     <div className='bg-white rounded-lg p-10'>
-      <EmailVerificationComponent token={params.token} />
+      <EmailVerificationComponent lang={params.lang} token={params.token} />
     </div>
   );
 }

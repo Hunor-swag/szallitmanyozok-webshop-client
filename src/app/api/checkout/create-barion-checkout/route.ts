@@ -1,7 +1,6 @@
 import { barion } from '@/lib/barion/barion';
-import { Cart, CartItem } from '@/types/typings';
+import { CartItem } from '@/types/typings';
 import { getServerSession } from 'next-auth';
-import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../../auth/[...nextauth]/authOptions';
 
